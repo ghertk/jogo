@@ -6,12 +6,13 @@ struct vetor {
 
 struct personagem {
     int x, y;
+    int w, h;
     Vetor movimento;
     SDL_Texture *textura;
 };
 
 Personagem *per_criaPersonagem(char *img,int x, int y, SDL_Renderer *renderer) {
-    SDL_Texture *imagem = g_carregaTextura("personagem.bmp", renderer);
+    SDL_Texture *imagem = g_carregaTextura(img, renderer);
     if (imagem == NULL) {
         return NULL;
     }
@@ -22,6 +23,9 @@ Personagem *per_criaPersonagem(char *img,int x, int y, SDL_Renderer *renderer) {
     p->movimento = m;
     p->x = x;
     p->y = y;
+    p->textura = imagem;
+    SDL_QueryTexture(p->textura, NULL, NULL, &p->w, &p->h);
+    return p;
 }
 
 
@@ -42,4 +46,22 @@ void per_desenha(Personagem *p, SDL_Renderer *r) {
     int pw, ph;
     SDL_QueryTexture(p->textura, NULL, NULL, &pw, &ph);
     g_renderizaTextura(p->textura, r, p->x, p->y);
+}
+
+Personagem *per_movimenta(Personagem *p) {
+    int movx = per_getVetorX(p) * 10;
+    int movy = per_getVetorY(p) * 10;
+    p->x += movx;
+    p->y += movy;
+    if (p->x < 0) {
+        p->x = 0;
+    } else if (p->x + p->w > SCREEN_WIDTH) {
+        p->x = SCREEN_WIDTH - p->w;
+    }
+    if (p->y < 0) {
+        p->y = 0;
+    } else if (p->y + p->h > SCREEN_HEIGHT) {
+        p->y = SCREEN_HEIGHT - p->h;
+    }
+    return p;
 }

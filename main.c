@@ -5,9 +5,7 @@
 #include "personagem.h"
 #include "graficos.h"
 #include "controle.h"
-
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#include "defs.h"
 
 int finalizarJogo(SDL_Window *j);
 
@@ -30,7 +28,7 @@ int main(int argc, char *argv[]) {
         finalizarJogo(janela);
         return 1;
     }
-    Personagem *personagem = per_criaPersonagem("personagem.bmp",0, 0, renderer);
+    Personagem *personagem = per_criaPersonagem("personagem.bmp", 0, 0, renderer);
     if (personagem == NULL) {
         logSDLError("Criar Personagem");
         SDL_DestroyRenderer(renderer);
@@ -44,6 +42,8 @@ int main(int argc, char *argv[]) {
             finalizarJogo(janela);
             return 0;
         }
+        per_movimenta(personagem);
+        g_desenhaFundo(background, renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
         // Imprime o personagem
         per_desenha(personagem, renderer);
         // Mostra os objetos renderizados

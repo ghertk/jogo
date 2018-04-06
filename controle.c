@@ -28,10 +28,10 @@ void c_keydownHandler(SDL_KeyboardEvent keydown, Personagem *p) {
             x = 1;
             break;
         case SDLK_UP:
-            y = 1;
+            y = -1;
             break;
         case SDLK_DOWN:
-            y = -1;
+            y = 1;
             break;
     }
     per_setVetor(p, x, y);

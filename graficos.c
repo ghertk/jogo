@@ -22,3 +22,14 @@ void g_renderizaTextura(SDL_Texture *t, SDL_Renderer *r, int x, int y) {
     SDL_QueryTexture(t, NULL, NULL, &dst.w, &dst.h);
     SDL_RenderCopy(r, t, NULL, &dst);
 }
+
+void g_desenhaFundo(SDL_Texture *t, SDL_Renderer *r, int screenWidth, int screenHeight) {
+    int bw, bh;
+    SDL_QueryTexture(t, NULL, NULL, &bw, &bh);
+    int x, y;
+    for (x = 0; x < screenWidth; x += bw) {
+        for (y = 0; y < screenHeight; y += bh) {
+            g_renderizaTextura(t, r, x, y);
+        }
+    }
+}
