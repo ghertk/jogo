@@ -1,5 +1,5 @@
 jogo.out:
-	gcc -o jogo.out -g main.c personagem.c graficos.c utils.c -lSDL2
+	gcc -o jogo.out -g main.c personagem.c graficos.c utils.c controle.c -lSDL2
 
 #jogo.out: personagem.o graficos.o
 #	gcc -o jogo.out -c -g main.c -lSDL2
