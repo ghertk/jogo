@@ -1,7 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-#include "utils.h"
 #include "personagem.h"
 #include "graficos.h"
 #include "controle.h"
@@ -34,6 +33,12 @@ int main(int argc, char *argv[]) {
         SDL_DestroyRenderer(renderer);
         finalizarJogo(janela);
     }
+    Lista *inimigos = lst_cria();
+    int i = 0;
+    srand(time(NULL));
+    for (i = 0; i < 5; i++) {
+        inimigos = per_insereLista(inimigos, per_criaPersonagem("personagem.bmp", rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, renderer));
+    }
     SDL_Texture *background = g_carregaTextura("background.bmp", renderer);
     while (1) {
         SDL_RenderClear(renderer);
@@ -46,6 +51,7 @@ int main(int argc, char *argv[]) {
         g_desenhaFundo(background, renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
         // Imprime o personagem
         per_desenha(personagem, renderer);
+        per_desenhaLista(inimigos, renderer);
         // Mostra os objetos renderizados
         SDL_RenderPresent(renderer);
     }

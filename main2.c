@@ -1,4 +1,6 @@
 #include <SDL2/SDL.h>
+#include "lista.h"
+#include "personagem.h"
 
 int main(int argc, char *argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -18,31 +20,16 @@ int main(int argc, char *argv[]) {
         SDL_Quit();
         return 1;
     }
-    SDL_Surface *bmp = SDL_LoadBMP("personagem.bmp");
-    if (bmp == NULL) {
-        SDL_DestroyRenderer(ren);
-        SDL_DestroyWindow(win);
-        printf("SDL_LoadBMP Error: %s\n", SDL_GetError());
-        SDL_Quit();
-        return 1;
-    }
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
-    SDL_FreeSurface(bmp);
-    if (tex == NULL) {
-        SDL_DestroyRenderer(ren);
-        SDL_DestroyWindow(win);
-        printf("SDL_Create_TextureFromSurface Error: %s\n", SDL_GetError());
-        SDL_Quit();
-        return 1;
-    }
+    Lista *personagens = lst_cria();
     int i = 0;
-    for (i = 0; i < 3; ++i) {
-        SDL_RenderClear(ren);
-        SDL_RenderCopy(ren, tex, NULL, NULL);
-        SDL_RenderPresent(ren);
-        SDL_Delay(1000);
-    }
-    SDL_DestroyTexture(tex);
+        for (i = 0; i < 5; i++) {
+            Personagem *p = per_criaPersonagem("personagem.bmp", (10 * i), (10 * i), ren);
+            personagens = per_insereLista(personagens, p);
+        }
+    SDL_RenderClear(ren);
+    lst_percorre(personagens, per_desenha);
+    SDL_RenderPresent(ren);
+    printf("");
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();

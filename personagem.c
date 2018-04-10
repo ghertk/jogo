@@ -65,3 +65,14 @@ Personagem *per_movimenta(Personagem *p) {
     }
     return p;
 }
+
+Lista *per_insereLista(Lista *l, Personagem* p) {
+    return lst_insere(l, (void *) p);
+}
+
+void per_desenhaLista(Lista *l, SDL_Renderer *renderer) {
+    Lista *aux = l;
+    for (aux = l; aux != NULL; aux = lst_getProx(aux)) {
+        per_desenha((Personagem *)lst_getItem(aux), renderer);
+    }
+}
