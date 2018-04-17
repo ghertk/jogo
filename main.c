@@ -63,6 +63,8 @@ int main(int argc, char *argv[]) {
         // Mostra os objetos renderizados
         SDL_RenderPresent(renderer);
     }
+    per_limpaLista(inimigos);
+    per_libera(personagem);
     SDL_DestroyTexture(background);
     SDL_DestroyRenderer(renderer);
     finalizarJogo(janela);

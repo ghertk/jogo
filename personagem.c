@@ -79,6 +79,7 @@ Lista *per_removeLista(Lista *l, Personagem *p) {
     while (atual != NULL) {
         Personagem *item = (Personagem *)lst_getItem(atual);
         if (item->id == p->id) {
+            free(item);
             break;
         }
         anterior = atual;
@@ -110,4 +111,18 @@ int per_colidiu(Personagem *p1, Personagem *p2) {
         }
     }
     return 0;
+}
+
+void per_limpaLista(Lista *l) {
+    Lista *atual = l;
+    Lista *prox;
+    while (l != NULL) {
+        prox = lst_getProx(l);
+        free(atual);
+        atual = prox;
+    }
+}
+
+void per_libera(Personagem *p) {
+    free(p);
 }

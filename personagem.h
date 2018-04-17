@@ -38,3 +38,7 @@ Lista *per_removeLista(Lista *l, Personagem *p);
 void per_desenhaLista(Lista *l, SDL_Renderer *renderer);
 
 int per_colidiu(Personagem *p1, Personagem *p2);
+
+void per_limpaLista(Lista *l);
+
+void per_libera(Personagem *p);
