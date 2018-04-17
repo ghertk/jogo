@@ -1,6 +1,10 @@
+#include <time.h>
+#include <stdlib.h>
 #include <SDL2/SDL.h>
-#include "lista.h"
 #include "personagem.h"
+#include "graficos.h"
+#include "controle.h"
+#include "defs.h"
 
 int main(int argc, char *argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -20,16 +24,10 @@ int main(int argc, char *argv[]) {
         SDL_Quit();
         return 1;
     }
-    Lista *personagens = lst_cria();
-    int i = 0;
-        for (i = 0; i < 5; i++) {
-            Personagem *p = per_criaPersonagem("personagem.bmp", (10 * i), (10 * i), ren);
-            personagens = per_insereLista(personagens, p);
-        }
-    SDL_RenderClear(ren);
-    lst_percorre(personagens, per_desenha);
-    SDL_RenderPresent(ren);
-    printf("");
+    Personagem *p1 = per_criaPersonagem("personagem.bmp", 0, 0, ren);
+    Personagem *p2 = per_criaPersonagem("personagem.bmp", 1, 0, ren);
+    per_colidiu(p1, p2);
+    per_colidiu(p2, p1);
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();

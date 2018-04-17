@@ -21,3 +21,5 @@ void *lst_getItem(Lista *l);
 
 /* Remove determinado item da lista */
 Lista *lst_remove(Lista *l);
+
+void lst_setProx(Lista *anterior, Lista *atual);

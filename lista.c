@@ -24,6 +24,6 @@ void *lst_getItem(Lista *l) {
     return l->item;
 }
 
-Lista *lst_remove(Lista *l) {
-    return l;
+void lst_setProx(Lista *anterior, Lista *atual) {
+    anterior->prox = atual->prox;
 }

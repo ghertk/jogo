@@ -5,6 +5,7 @@ struct vetor {
 };
 
 struct personagem {
+    int id;
     int x, y;
     int w, h;
     Vetor movimento;
@@ -12,6 +13,7 @@ struct personagem {
 };
 
 Personagem *per_criaPersonagem(char *img,int x, int y, SDL_Renderer *renderer) {
+    static int id = 0;
     SDL_Texture *imagem = g_carregaTextura(img, renderer);
     if (imagem == NULL) {
         return NULL;
@@ -20,11 +22,13 @@ Personagem *per_criaPersonagem(char *img,int x, int y, SDL_Renderer *renderer) {
     m.x = 0;
     m.y = 0;
     Personagem *p = (Personagem *)malloc(sizeof(Personagem));
+    p->id = ++id;
     p->movimento = m;
-    p->x = x;
-    p->y = y;
     p->textura = imagem;
     SDL_QueryTexture(p->textura, NULL, NULL, &p->w, &p->h);
+    p->x = (x + p->w > SCREEN_WIDTH) ? SCREEN_WIDTH - p->w : x;
+    p->y = (y + p->h > SCREEN_HEIGHT) ? SCREEN_HEIGHT - p->h : y;
+    
     return p;
 }
 
@@ -48,7 +52,7 @@ void per_desenha(Personagem *p, SDL_Renderer *r) {
     g_renderizaTextura(p->textura, r, p->x, p->y);
 }
 
-Personagem *per_movimenta(Personagem *p) {
+void per_movimenta(Personagem *p) {
     int movx = per_getVetorX(p) * 10;
     int movy = per_getVetorY(p) * 10;
     p->x += movx;
@@ -63,11 +67,33 @@ Personagem *per_movimenta(Personagem *p) {
     } else if (p->y + p->h > SCREEN_HEIGHT) {
         p->y = SCREEN_HEIGHT - p->h;
     }
-    return p;
 }
 
 Lista *per_insereLista(Lista *l, Personagem* p) {
     return lst_insere(l, (void *) p);
+}
+
+Lista *per_removeLista(Lista *l, Personagem *p) {
+    Lista *atual = l;
+    Lista *anterior = NULL;
+    while (atual != NULL) {
+        Personagem *item = (Personagem *)lst_getItem(atual);
+        if (item->id == p->id) {
+            break;
+        }
+        anterior = atual;
+        atual = lst_getProx(atual);
+    }
+    if (atual == NULL) {
+        return l;
+    }
+    if (anterior == NULL) {
+        l = lst_getProx(atual);
+    } else {
+        lst_setProx(anterior, atual);
+    }
+    free(atual);
+    return l;
 }
 
 void per_desenhaLista(Lista *l, SDL_Renderer *renderer) {
@@ -75,4 +101,13 @@ void per_desenhaLista(Lista *l, SDL_Renderer *renderer) {
     for (aux = l; aux != NULL; aux = lst_getProx(aux)) {
         per_desenha((Personagem *)lst_getItem(aux), renderer);
     }
+}
+
+int per_colidiu(Personagem *p1, Personagem *p2) {
+    if ((p1->x >= p2->x && p1->x <= p2->x + p2->w) || (p1->x + p1->w >= p2->x && p1->x + p1->w <= p2->x + p2->w)) {
+        if ((p1->y >= p2->y && p1->y <= p2->y + p2->h) || (p1->y + p1->h >= p2->y && p1->y + p1->h <= p2->y + p2->h)) {
+            return 1;
+        }
+    }
+    return 0;
 }

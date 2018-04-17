@@ -1,3 +1,4 @@
+// git push -u origin master
 #include <time.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
@@ -48,6 +49,13 @@ int main(int argc, char *argv[]) {
             return 0;
         }
         per_movimenta(personagem);
+        Lista *l;
+        for ( l = inimigos; l != NULL; l = lst_getProx(l)) {
+            if (per_colidiu(personagem, (Personagem *)lst_getItem(l))) {
+                inimigos = per_removeLista(inimigos, (Personagem *)lst_getItem(l));
+                break;
+            }
+        }
         g_desenhaFundo(background, renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
         // Imprime o personagem
         per_desenha(personagem, renderer);

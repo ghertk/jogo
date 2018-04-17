@@ -27,10 +27,14 @@ void per_setVetor(Personagem *p,int x, int y);
 void per_desenha(Personagem *p, SDL_Renderer *r);
 
 /* Movimenta o personagem */
-Personagem *per_movimenta(Personagem *p);
+ void per_movimenta(Personagem *p);
 
 /* Insere determinado personagem na lista */
-Lista *per_insereLista(Lista *l, Personagem* p);
+Lista *per_insereLista(Lista *l, Personagem *p);
+
+Lista *per_removeLista(Lista *l, Personagem *p);
 
 /* Percorre a lista e desenha os personagens */
 void per_desenhaLista(Lista *l, SDL_Renderer *renderer);
+
+int per_colidiu(Personagem *p1, Personagem *p2);
