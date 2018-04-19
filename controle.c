@@ -14,7 +14,7 @@ int c_eventHandler(Personagem *p) {
                 return 0;
         }
     }
-    return 0;
+    return 1;
 }
 
 void c_keydownHandler(SDL_KeyboardEvent keydown, Personagem *p) {

@@ -33,3 +33,24 @@ void g_desenhaFundo(SDL_Texture *t, SDL_Renderer *r, int screenWidth, int screen
         }
     }
 }
+
+SDL_Texture *g_carregaTexto(char *mensagem, char *arquivo, SDL_Color cor, int tamFont, SDL_Renderer *renderer) {
+    TTF_Font *fonte = TTF_OpenFont(arquivo, tamFont);
+    if (fonte == NULL) {
+        logSDLError("TTF_OpenFont");
+        return NULL;
+    }
+    SDL_Surface *surface = TTF_RenderText_Blended(fonte, mensagem, cor);
+    if (surface == NULL) {
+        TTF_CloseFont(fonte);
+        logSDLError("TTF_RenderText");
+        return NULL;
+    }
+    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+    if (texture == NULL) {
+        logSDLError("CreateTexture");
+    }
+    SDL_FreeSurface(surface);
+    TTF_CloseFont(fonte);
+    return texture;
+}

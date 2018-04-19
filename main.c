@@ -15,6 +15,11 @@ int main(int argc, char *argv[]) {
         logSDLError("SDL_Init");
         return 1;
     }
+    if (TTF_Init() < 0) {
+        logSDLError("TTF_Init");
+        SDL_Quit();
+        return 1;
+    }
     // Cria a janela principal
     SDL_Window *janela = SDL_CreateWindow("Jogo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
     if (janela == NULL) {
@@ -41,6 +46,18 @@ int main(int argc, char *argv[]) {
         inimigos = per_insereLista(inimigos, per_criaPersonagem("personagem.bmp", rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, renderer));
     }
     SDL_Texture *background = g_carregaTextura("background.bmp", renderer);
+    SDL_Color cor = { 255, 255, 255, 255 };
+    SDL_Texture *texto = g_carregaTexto("Pressione qualquer tecla para iniciar.", "fonte.ttf", cor, 64, renderer);
+    SDL_RenderClear(renderer);
+    {
+        int h, w;
+        SDL_QueryTexture(texto, NULL, NULL, &w, &h);
+        int x = SCREEN_WIDTH / 2 - w / 2;
+        int y = SCREEN_HEIGHT / 2 - h / 2;
+        g_renderizaTextura(texto, renderer, x, y);
+        SDL_RenderPresent(renderer);
+        while (c_eventHandler(personagem) != 0) {}
+    }
     while (1) {
         SDL_RenderClear(renderer);
         // Verifica se é o evento de fechamento de janela
