@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-/* Lista encadeada generica */
+/* Lista encadeada genérica */
 typedef struct lista Lista;
 
 /* Cria um lista */
@@ -10,7 +10,7 @@ Lista *lst_cria();
 Lista *lst_insere(Lista *l, void *i);
 
 /* Retorna o proximo elemento de uma lista.
- * Utilizada para iterar por uma lista fora do arquivo de lista
+ * Utilizada para iterar por uma lista em arquivos externos
  */
 Lista *lst_getProx(Lista *l);
 
@@ -22,4 +22,5 @@ void *lst_getItem(Lista *l);
 /* Remove determinado item da lista */
 Lista *lst_remove(Lista *l);
 
+/* Altera o valor do campo prox para determiando elemento */
 void lst_setProx(Lista *anterior, Lista *atual);

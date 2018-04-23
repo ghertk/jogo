@@ -5,7 +5,7 @@
 /* Carrega determinada sprite */
 SDL_Texture *g_carregaTextura(char *arquivo, SDL_Renderer *r);
 
-/* Renderiza determinda textura */
+/* Renderiza determinada textura */
 void g_renderizaTextura(SDL_Texture *t, SDL_Renderer *r, int x, int y, SDL_Rect *clip);
 
 /* Desenha fundo */

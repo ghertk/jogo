@@ -37,8 +37,11 @@ Lista *per_removeLista(Lista *l, Personagem *p);
 /* Percorre a lista e desenha os personagens */
 void per_desenhaLista(Lista *l, SDL_Renderer *renderer);
 
+/* Verifica colisão entre dois objetos(Bounding box) */
 int per_colidiu(Personagem *p1, Personagem *p2);
 
+/* Apaga todos os elemento de uma lista */
 void per_limpaLista(Lista *l);
 
+/* Libera a memória */
 void per_libera(Personagem *p);

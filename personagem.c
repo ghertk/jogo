@@ -79,7 +79,7 @@ Lista *per_removeLista(Lista *l, Personagem *p) {
     while (atual != NULL) {
         Personagem *item = (Personagem *)lst_getItem(atual);
         if (item->id == p->id) {
-            free(item);
+            per_libera(item);
             break;
         }
         anterior = atual;
