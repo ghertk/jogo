@@ -49,7 +49,7 @@ void per_setVetor(Personagem *p, int x, int y) {
 void per_desenha(Personagem *p, SDL_Renderer *r) {
     int pw, ph;
     SDL_QueryTexture(p->textura, NULL, NULL, &pw, &ph);
-    g_renderizaTextura(p->textura, r, p->x, p->y);
+    g_renderizaTextura(p->textura, r, p->x, p->y, NULL);
 }
 
 void per_movimenta(Personagem *p) {
@@ -105,21 +105,25 @@ void per_desenhaLista(Lista *l, SDL_Renderer *renderer) {
 }
 
 int per_colidiu(Personagem *p1, Personagem *p2) {
-    if ((p1->x >= p2->x && p1->x <= p2->x + p2->w) || (p1->x + p1->w >= p2->x && p1->x + p1->w <= p2->x + p2->w)) {
-        if ((p1->y >= p2->y && p1->y <= p2->y + p2->h) || (p1->y + p1->h >= p2->y && p1->y + p1->h <= p2->y + p2->h)) {
-            return 1;
-        }
+    if (p1->y + p1->h <= p2->y) {
+        return 0;
     }
-    return 0;
+    if (p1->y >= p2->y + p2->h) {
+        return 0;
+    }
+    if (p1->x + p1->w <= p2->x) {
+        return 0;
+    }
+    if (p1->x >= p2->x + p2->w) {
+        return 0;
+    }
+    return 1;
 }
 
 void per_limpaLista(Lista *l) {
-    Lista *atual = l;
-    Lista *prox;
-    while (l != NULL) {
-        prox = lst_getProx(l);
-        free(atual);
-        atual = prox;
+    Lista *atual = l; 
+    while (atual != NULL) {
+        atual = per_removeLista(atual, (Personagem *)lst_getItem(atual));
     }
 }
 

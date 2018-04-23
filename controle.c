@@ -11,6 +11,9 @@ int c_eventHandler(Personagem *p) {
                 return 0;
             case SDL_KEYUP:
                 c_keyupHandler(evento.key, p);
+                if (evento.key.keysym.sym == SDLK_ESCAPE) {
+                    return -1;
+                }
                 return 0;
         }
     }

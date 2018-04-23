@@ -15,12 +15,17 @@ SDL_Texture *g_carregaTextura(char *arquivo, SDL_Renderer *r) {
     return textura;
 }
 
-void g_renderizaTextura(SDL_Texture *t, SDL_Renderer *r, int x, int y) {
+void g_renderizaTextura(SDL_Texture *t, SDL_Renderer *r, int x, int y, SDL_Rect *clip) {
     SDL_Rect dst;
     dst.x = x;
     dst.y = y;
-    SDL_QueryTexture(t, NULL, NULL, &dst.w, &dst.h);
-    SDL_RenderCopy(r, t, NULL, &dst);
+    if (clip != NULL) {
+        dst.w = clip->w;
+        dst.h = clip->h;
+    } else {
+        SDL_QueryTexture(t, NULL, NULL, &dst.w, &dst.h);
+    }
+    SDL_RenderCopy(r, t, clip, &dst);
 }
 
 void g_desenhaFundo(SDL_Texture *t, SDL_Renderer *r, int screenWidth, int screenHeight) {
@@ -29,7 +34,7 @@ void g_desenhaFundo(SDL_Texture *t, SDL_Renderer *r, int screenWidth, int screen
     int x, y;
     for (x = 0; x < screenWidth; x += bw) {
         for (y = 0; y < screenHeight; y += bh) {
-            g_renderizaTextura(t, r, x, y);
+            g_renderizaTextura(t, r, x, y, NULL);
         }
     }
 }
