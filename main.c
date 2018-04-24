@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Cria a janela principal
-    SDL_Window *janela = SDL_CreateWindow("Jogo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+    SDL_Window *janela = SDL_CreateWindow("Colete os Itens", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
     if (janela == NULL) {
         logSDLError("CreateWindow");
         SDL_Quit();
