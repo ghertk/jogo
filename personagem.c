@@ -97,6 +97,22 @@ Lista *per_removeLista(Lista *l, Personagem *p) {
     return l;
 }
 
+void per_movXY(Personagem *p) {
+    int x = rand() % (SCREEN_WIDTH - p->w);
+    int y = rand() % (SCREEN_HEIGHT - p->h);
+    p->x = x;
+    p->y = y;
+}
+
+void per_colidiuLista(Lista *moeda, Personagem *p) {
+    Lista *aux;
+    for (aux = moeda; aux != NULL; aux = lst_getProx(aux)) {
+        if (per_colidiu(p, (Personagem *)lst_getItem(aux))) {
+            per_movXY(p);
+        }
+    }
+}
+
 void per_desenhaLista(Lista *l, SDL_Renderer *renderer) {
     Lista *aux = l;
     for (aux = l; aux != NULL; aux = lst_getProx(aux)) {

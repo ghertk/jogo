@@ -34,6 +34,10 @@ Lista *per_insereLista(Lista *l, Personagem *p);
 
 Lista *per_removeLista(Lista *l, Personagem *p);
 
+void per_movXY(Personagem *p);
+
+void per_colidiuLista(Lista *moeda, Personagem *p);
+
 /* Percorre a lista e desenha os personagens */
 void per_desenhaLista(Lista *l, SDL_Renderer *renderer);
 

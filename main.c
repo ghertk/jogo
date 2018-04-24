@@ -62,6 +62,10 @@ int main(int argc, char *argv[]) {
         int i = 0;
         for (i = 0; i < 5; i++) {
             moeda = per_insereLista(moeda, per_criaPersonagem("moeda.bmp", rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, renderer));
+            if (per_colidiu(personagem, (Personagem *)lst_getItem(moeda))) {
+                per_movXY((Personagem *)lst_getItem(moeda));
+            }
+            per_colidiuLista(lst_getProx(moeda), (Personagem *)lst_getItem(moeda));
         }
 
         // Carrega a imagem de fundo
@@ -126,6 +130,10 @@ int main(int argc, char *argv[]) {
                 if (per_colidiu(personagem, (Personagem *)lst_getItem(l))) {
                     moeda = per_removeLista(moeda, (Personagem *)lst_getItem(l));
                     moeda = per_insereLista(moeda, per_criaPersonagem("moeda.bmp", rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, renderer));
+                    if (per_colidiu(personagem, (Personagem *)lst_getItem(moeda))) {
+                        per_movXY((Personagem *)lst_getItem(moeda));
+                    }
+                    per_colidiuLista(lst_getProx(moeda), (Personagem *)lst_getItem(moeda));
                     pontos++;
                     break;
                 }
